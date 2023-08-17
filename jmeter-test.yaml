@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: test-deployment
+  name: test-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-pod
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: test-pod
+    spec:
+      nodeSelector:
+         beta.kubernetes.io/instance-type: c5.large
+      #   intent: apps
+      containers:
+      - image: public.ecr.aws/s0k4s5w7/jmeter-test:latest
+        resources:
+          requests:
+            cpu: "1024m"
+            memory: "2048"
+          # limits:
+          #   vpc.amazonaws.com/pod-eni: "1"
+        name: ubuntu
+        command: ["sleep","3650d"]
